@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>增加函数1</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/uikit.css">
+  <link rel="stylesheet" href="../assets/css/styles.op-app.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/icon-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../assets/vendor/icon-hs/style.css">
+  <link rel="stylesheet" href="../assets/css/unify-core.css">
+  <link rel="stylesheet" href="../assets/css/unify-components.css">
+  <link rel="stylesheet" href="./css/load.css">
+
+</head>
+
+<body id="bbody">
+  <main id="main" class="g-color-black">
+
+    <div class="w-100 text-center" v-if="istotalload">
+      <div class="lds-roller g-mt-140">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+
+    <div style="display: none;" v-show="!istotalload">
+
+
+
+      <header id="headertop" class="u-header u-header--toggle-section u-header--change-appearance"
+        data-header-fix-moment="300" style="z-index: 999;">
+        <div
+          class="u-header__section u-header__section--light u-header__section--dark g-bg-gray-dark-v3 g-transition-0_3 g-py-10 ">
+          <div class="g-mx-50">
+
+            <div
+              class="row flex-column flex-sm-row justify-content-between align-items-center text-uppercase g-font-weight-600 g-color-white g-font-size-12 g-mx-0--lg">
+
+              <div class="col-auto d-flex ">
+
+                <a class="btn text-center g-color-orange g-mr-20 " href="addfunction.html">
+                  <i class="fa fa-plus g-font-size-18 g-valign-middle  g-mr-10 g-mt-minus-2"></i>
+                  <div>新增云函数</div>
+                </a>
+
+                <a class="btn text-center   g-mr-20 g-color-white" href="invoke.html">
+                  <i class="fa fa-bug g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>云函数调试</div>
+                </a>
+
+                <a class="btn text-center g-mr-20  g-color-white" href="listfunction.html">
+                  <i class="fa fa-list-ul g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>函数列表</div>
+                </a>
+
+                <a class="btn text-center  g-color-white" href="listlog.html">
+                  <i class="fa fa-files-o g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>执行日志</div>
+                </a>
+
+              </div>
+
+              <div class="col-auto">
+                <div class="text-center g-color-white d-flex">
+                  <!-- <i class="fa fa-plus g-font-size-18 g-valign-middle  g-mr-10"></i> -->
+                  <!-- 项目切换 -->
+                  <button type="button" class="btn g-bg-transparent g-color-white dropdown-toggle g-font-weight-400"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{chkProject.name}}
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item g-py-10" href="#!" v-for="pro in projects"
+                      @click="changeProject(pro.id)">{{pro.name}}</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-auto d-flex">
+
+                <a class="btn text-center g-color-gray-dark-v3 g-mr-20 " href="#!">
+                  <i class="fa fa-plus g-font-size-18 g-valign-middle  g-mr-10 g-mt-minus-2"></i>
+                  <div>新增云函数</div>
+                </a>
+
+                <a class="btn text-center   g-mr-20 g-color-white" href="chart.html">
+                  <i class="fa fa-pie-chart g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>运维图表</div>
+                </a>
+
+
+                <a class="btn text-center g-mr-20 g-color-white " href="set.html">
+                  <i class="fa fa-cog g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>项目配置</div>
+                </a>
+
+                <a class="btn text-center g-color-white" href="list.html">
+                  <i class="fa fa-th-large g-font-size-18 g-valign-middle  g-mr-10 g-mt-minus-2"></i>
+                  <div>退出登录</div>
+                </a>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section id="appScreens" class="g-py-90 g-px-30">
+
+        <div class="text-center justify-content-end">
+          <ul class="nav justify-content-center u-nav-v1-1 u-nav-dark g-mb-20" role="tablist"
+            data-target="nav-1-1-dark-hor-right" data-tabs-mobile-type="slide-up-down"
+            data-btn-classes="btn btn-md btn-block rounded-0 u-btn-outline-darkgray g-mb-20">
+            <li class="nav-item g-bg-black-opacity-0_1"  @click="isSimpleMode(true)">
+              <a class="nav-link active" data-toggle="tab" href="#nav-1-1-dark-hor-right--1" role="tab">精简配置模式</a>
+            </li>
+            <li class="nav-item g-bg-black-opacity-0_1" @click="isSimpleMode(false)">
+              <a class="nav-link" data-toggle="tab" href="#nav-1-1-dark-hor-right--2" role="tab">完整配置模式</a>
+            </li>
+          </ul>
+        </div>
+
+
+        <div class="row">
+
+          <div class="col-4">
+            <div class="form-group  g-mb-25">
+              <label for="example-text-input" class="col-form-label">代码目录</label>
+              <div class="input-group g-brd-primary--focus">
+                <div class="input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0"
+                  @click="chosecodepath()">
+                  <i class="fa fa-folder-open-o"></i>
+                </div>
+                <input class="form-control form-control-md rounded-0" type="text" placeholder="点击左侧加号选择项目根目录"
+                  v-model="fun.codeUri" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-2">
+            <div class="form-group g-mb-25">
+              <label for="example-text-input" class="col-form-label">编程语言</label>
+              <div class="input-group g-brd-primary--focus">
+                <select class="w-100 u-select-v1 g-color-black custom-select rounded-0 form-control-lg "
+                  v-model="fun.runtime">
+                  <option value="Python3.6">Python3.6</option>
+                  <option value="Python2.7">Python2.7</option>
+                  <option value="Nodejs8.9">Nodejs8.9</option>
+                  <option value="Nodejs6.10">Nodejs6.10</option>
+                  <option value="Php5">PHP5</option>
+                  <option value="Php7">PHP7</option>
+                  <option value="Go1">Golang1</option>
+                  <option value="Java8">Java8</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="form-group g-mb-25">
+              <label for="example-text-input" class="col-form-label">请选择接口文件和接口函数</label>
+              <div class="row">
+                <div class="col-6">
+                  <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                    v-model="chkapifile">
+                    <option value="">请选择文件</option>
+                    <option :value="file.name" v-for="file in apifiles">{{file.file}}</option>
+                  </select>
+                </div>
+
+                <div class="col-6">
+                  <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                    v-model="chkapifunction">
+                    <option value="">请选择函数</option>
+                    <option :value="fun" v-for="fun in apifunctions">{{fun}}</option>
+                  </select>
+                </div>
+
+              </div>
+              <small class="g-color-gray-dark-v4">Py Nodejs PHP语言支持自动检索接口函数</small>
+            </div>
+          </div>
+
+
+          <div class="col-2">
+            <label for="example-text-input" class="col-form-label">请选择命名空间</label>
+
+            <div class="d-flex" v-if="!addnamespace.show">
+              <div class="g-valign-middle" v-if="loadnamespace"><i class="fa fa-spinner fa-spin"></i></div>
+
+              <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                v-model="fun.namespace">
+                <option :value="ns.Name" v-for="ns in namespace">{{ns.Name}}</option>
+              </select>
+              <a href="#!" class="btn btn-lg g-color-gray-dark-v4  g-brd-none" @click="showAddNS">
+                <i class="fa fa-plus"></i>
+              </a>
+            </div>
+
+            <div class="d-flex" v-if="addnamespace.show">
+              <div class="input-group g-brd-primary--focus">
+                <input class="form-control form-control-md border-right-0 rounded-0 pr-0" type="text"
+                  placeholder="新的命名空间" v-model="addnamespace.name" v-on:keyup.enter="addNS">
+                <b class="tooltip tooltip-top-right u-tooltip--v1">修改完需确认</b>
+                <div class="input-group-addon d-flex align-items-center g-bg-white rounded-0" @click="addNS">
+                  <i class="fa fa-check"></i>
+                </div>
+              </div>
+
+            </div>
+
+
+          </div>
+
+
+          <div class="col-2 g-mb-10">
+            <div class="form-group ">
+              <label for="example-text-input" class="col-form-label">超时秒数</label>
+              <input type="number" v-model="fun.timeout" min="1" max="1200" step="1"
+                class="form-control rounded-0 form-control-md" placeholder="请输入API的超时秒数">
+              <small class="g-color-gray-dark-v4">相当于计费最长时间</small>
+            </div>
+          </div>
+
+          <div class="col-2 g-mb-10">
+            <div for="example-text-input" class="col-form-label">运行内存</div>
+            <select class="w-100 u-select-v1 g-color-black custom-select rounded-0 form-control-lg"
+              v-model="fun.memorySize">
+              <option value="64">64M</option>
+              <option value="128">128</option>
+              <option value="256">256</option>
+              <option value="384">384</option>
+              <option value="512">512</option>
+              <option value="640">640</option>
+              <option value="768">768</option>
+              <option value="896">896</option>
+              <option value="1024">1024</option>
+            </select>
+            <small class="g-color-gray-dark-v4">够用就好,越大费用越高</small>
+          </div>
+
+
+          <div class="col-6   g-mb-10">
+            <label for="example-text-input" class="col-form-label">
+              开启内网VPC
+            </label>
+            <div class="d-flex w-100">
+              <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg g-width-150"
+                v-model="showvpc">
+                <option value="open">开启</option>
+                <option value="close">关闭</option>
+              </select>
+
+              <div type="text" class="form-control rounded-0 form-control-md  g-mx-10 text-center"
+                v-bind:class="{'g-bg-gray-light-v5':showvpc!='open'}">
+                {{fun.vpcConfig.vpcId}}</div>
+
+              <div type="text" class="form-control rounded-0 form-control-md g-mx-10 text-center"
+                v-bind:class="{'g-bg-gray-light-v5':showvpc!='open'}">
+                {{fun.vpcConfig.subnetId}}</div>
+
+            </div>
+            <small class="g-color-gray-dark-v4">VPC就是腾讯云内网访问权限</small>
+          </div>
+
+
+          <div class="col-12">
+            <div class="form-group  g-mb-25">
+              <label for="example-text-input" class="col-form-label">函数描述</label>
+              <input type="text" class="form-control rounded-0 form-control-md" v-model="fun.description" @input="changeDesc"
+                placeholder="请输入函数描述">
+            </div>
+          </div>
+
+
+
+
+          <div class="col-6 g-mb-25" v-show="!simpleMode">
+            <div class="col-form-label w-100">环境变量</div>
+
+            <div class="col-12 g-brd-around g-brd-gray-light-v1 g-brd-1 g-py-20">
+              <div class="row col-12">
+                <div class="col-12 row g-mb-10">
+                  <div class="col-5">key</div>
+                  <div class="col-5">value</div>
+                  <div class="col-2"></div>
+                </div>
+
+                <div class="col-12 row g-mb-10" v-for="(item, index) in environment">
+                  <div class="col-4">
+                    <input class="form-control rounded-0 form-control-md" placeholder="变量名" v-model="item.name">
+                  </div>
+
+                  <div class="col-4">
+                    <input class="form-control rounded-0 form-control-md" placeholder="变量值" v-model="item.val">
+                  </div>
+
+                  <div class="col-4">
+                    <a href="#!" class="btn btn-lg g-color-gray-dark-v4 g-mr-10  g-brd-none" @click="delenv(index)">
+                      <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="#!" class="btn btn-lg g-color-gray-dark-v4  g-brd-none" @click="addenv"
+                      v-if="index==environment.length-1">
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="col-6  g-mb-25"  v-show="!simpleMode">
+            <div class="w-100 col-form-label">函数标签</div>
+
+            <div class="col-12 g-brd-around g-brd-gray-light-v1 g-brd-1 g-py-20">
+
+
+              <div class="col-12 row">
+
+                <div class="col-12 row g-mb-10 ">
+                  <div class="col-4">key</div>
+                  <div class="col-4">value</div>
+                  <div class="col-4"></div>
+                </div>
+
+                <div class="col-12 g-mb-10 row" v-for="(item, index) in tags">
+                  <div class="col-4">
+                    <input class="form-control rounded-0 form-control-md" placeholder="标签名" v-model="item.name">
+                  </div>
+
+                  <div class="col-4">
+                    <input type="email" class="form-control rounded-0 form-control-md" placeholder="标签值"
+                      v-model="item.val">
+                  </div>
+
+                  <div class="col-4">
+                    <a href="#!" class="btn btn-lg g-color-gray-dark-v4 g-mr-10  g-brd-none" @click="deltag(index)">
+                      <i class="fa fa-minus"></i>
+                    </a>
+                    <a href="#!" class="btn btn-lg g-color-gray-dark-v4 g-brd-none" @click="addtag"
+                      v-if="index==tags.length-1">
+                      <i class="fa fa-plus"></i>
+                    </a>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+
+          <div class="col-6 g-mb-25"  v-show="!simpleMode">
+            <label for="example-text-input" class="col-form-label">打包排除目录</label>
+            <div class="input-group ">
+              <a href="#!" @click="addexclude"
+                class="btn input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0 g-py-12">
+                <i class="fa fa-plus"></i>
+              </a>
+              <!-- <textarea class="form-control form-control-md g-resize-none rounded-0" rows="4"
+                placeholder="点击左侧按钮可以添加不被上传到SCF的目录"></textarea> -->
+              <div class="w-100 g-brd-gray-light-v2 g-brd-top">
+                <div class="input-group" v-for="(dir, inx) in fun.exclude">
+                  <div disabled class="form-control form-control-md rounded-0 g-brd-top-none" type="text"
+                    placeholder="点击左侧添加目录" :value="dir">{{dir}}</div>
+
+                  <a class="btn input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0 g-brd-top-none"
+                    @click="openfolder(dir)">
+                    <i class="fa fa-folder-open-o"></i>
+                  </a>
+
+                  <a class="btn input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0 g-brd-top-none"
+                    @click="delexclude(inx)">
+                    <i class="fa fa-remove"></i>
+                  </a>
+                </div>
+
+                <div class="input-group" v-if="fun.exclude.length==0">
+                  <input disabled class="form-control form-control-md rounded-0 g-brd-top-none" type="text"
+                    placeholder="点击左侧添加目录">
+                </div>
+
+              </div>
+
+            </div>
+            <small>上传到SCF服务器的代码将排除上述目录,如GIT node_model目录</small>
+          </div>
+
+         
+
+          <div class="col-12 g-mb-25">
+            <div class="row">
+              <label class="col-12 col-form-label">触发器</label>
+              <div class="col-12">
+                <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg g-width-200"
+                  v-model="event" @change="changeevent">
+                  <option value="">选择触发器</option>
+                  <option value="api">API网关</option>
+                  <option value="timer">定时/循环触发</option>
+                  <option value="cos">COS触发</option>
+                </select>
+
+                <div class="col-12">
+
+                  <div class="row g-brd-around g-brd-gray-light-v2 g-mt-20 g-pa-20  g-font-size-12"
+                    v-show="event=='timer'">
+
+                    <div class="col-12 row">
+                      <div class="col-form-label col-12">定时任务名称<i class="g-ml-10 fa fa-question-circle-o" rel="drevil"
+                          data-content="一个函数不能设置同名的定时任务" data-container="body" data-toggle="popover"
+                          data-placement="bottom"></i></div>
+                      <div class="col-5">
+                        <input class="form-control rounded-0 form-control-md" placeholder="定时任务名称"
+                          v-model="timergw.name">
+                      </div>
+
+                    </div>
+
+                    <div class="col-12 row g-mb-10">
+                      <div class="col-form-label col-12">触发规则</div>
+                      <div class="col-5">
+                        <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                          v-model="timergw.type">
+                          <option value="fix">定时触发</option>
+                          <option value="cir">循环触发</option>
+                          <option value="cus">自定义时间规则</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-12" v-if="timergw.type=='cus'">
+                      <label for="example-text-input" class="col-form-label">自定义规则</label>
+                      <input class="form-control rounded-0 form-control-md" placeholder="cron表达式"
+                        v-model="timergw.rule">
+                      <a href="http://cloud.tencent.com/document/product/583/9708">点击查看规则详细说明</a>
+                    </div>
+                    <div class="col-12" v-if="timergw.type!='cus'">
+                      <table class="w-100">
+
+                        <tr class="g-bg-gray-dark-v5 text-center g-color-white g-font-size-16 g-height-40" v-if="timergw.type=='fix'">
+                          <td>秒</td>
+                          <td>分钟</td>
+                          <td>小时(24H)</td>
+                          <td>日</td>
+                          <td>星期</td>
+                          <td>月</td>
+                        </tr>
+                        <tr class=""  v-if="timergw.type=='fix'">
+                          <td class="g-brd-gray-dark-v5 g-brd-bottom g-py-10">
+                            <input type="number" class=" form-control rounded-0 form-control-md text-center"
+                              v-model="timergw.sec"></td>
+                          <td class="g-brd-gray-dark-v5 g-brd-bottom">
+                            <input type="number" class="form-control rounded-0 form-control-md text-center"
+                              v-model="timergw.min"></td>
+                          <td class="g-brd-gray-dark-v5 g-brd-bottom">
+                            <input type="number" class="form-control rounded-0 form-control-md text-center"
+                              v-model="timergw.hour"></td>
+                          <td class="g-brd-gray-dark-v5 g-brd-bottom">
+                            <input type="number" class="form-control rounded-0 form-control-md text-center"
+                              v-model="timergw.day">
+                          </td>
+                          <td class="g-brd-gray-dark-v5 g-brd-bottom g-py-10">
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" value="0" type="checkbox"
+                                checked="" v-model="timergw.week">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              周一
+                            </label>
+
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" value="1" type="checkbox"
+                                checked="" v-model="timergw.week">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              周二
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" value="2" type="checkbox"
+                                checked="" v-model="timergw.week">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              周三
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" value="3" type="checkbox"
+                                checked="" v-model="timergw.week">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              周四
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" value="4" type="checkbox"
+                                checked="" v-model="timergw.week">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              周五
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" value="5" type="checkbox"
+                                checked="" v-model="timergw.week">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              周六
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" value="6" type="checkbox"
+                                checked="" v-model="timergw.week">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              周日
+                            </label>
+
+
+                          </td>
+                          <td class="g-brd-gray-dark-v5 g-brd-bottom g-py-10">
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="1">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              1月
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="2">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              2月
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="3">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              3月
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="4">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              4月
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="5">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              5月
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="6">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              6月
+                            </label><label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="7">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              7月
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="8">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              8月
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25 ">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="9">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              9月
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25 ">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="10">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              10月
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="11">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              11月
+                            </label>
+                            <label class="form-check-inline u-check g-pl-25">
+                              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox"
+                                v-model="timergw.month" value="12">
+                              <div class="u-check-icon-checkbox-v4 g-absolute-centered--y g-left-0">
+                                <i class="fa" data-check-icon=""></i>
+                              </div>
+                              12月
+                            </label>
+                          </td>
+                          <!-- <td> <input type="number" class="form-control rounded-0 form-control-md text-center" v-model="timergw.week"></td> -->
+
+                        </tr>
+
+
+                        
+
+                        <tr  v-if="timergw.type=='cir'" class="w-50">
+                          <td>
+                            <div class="input-group g-width-400">
+                              <div class="input-group-btn">
+                                <button type="button" class="btn btn-md btn-secondary dropdown-toggle dropdown-toggle-split rounded-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  {{timergw.cir.txt==''?'请选择循环时间':timergw.cir.txt}}
+                                </button>
+                                <div class="dropdown-menu">
+                                  <a class="dropdown-item" href="#!" @click="changeCir('day')">天</a>
+                                  <a class="dropdown-item" href="#!" @click="changeCir('hour')">小时</a>
+                                  <a class="dropdown-item" href="#!" @click="changeCir('min')">分</a>
+                                  <a class="dropdown-item" href="#!" @click="changeCir('sec')">秒</a>
+                                </div>
+                              </div>
+                              <input type="number" class="form-control rounded-0 form-control-md" max="59" v-model="timergw.cir.cirNumber">
+                            </div>
+                          </td>
+                          <td></td>
+
+                        </tr>
+
+
+                        <tr>
+                          <td colspan="7" class="g-font-size-20">
+                            {{timergw.txt}}
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="7" class="g-font-size-20">
+                            Cron表达式:{{timergw.rule}}
+                          </td>
+                        </tr>
+
+                      </table>
+
+                    </div>
+
+                  </div>
+
+                  <div class="row g-brd-around g-brd-gray-light-v2 g-mt-20 g-pa-20  g-font-size-12"
+                    v-show="event=='cos'">
+
+                    <div class="col-12 row">
+                      <div class="col-form-label col-12">COS Bucket<i class="g-ml-10 fa fa-question-circle-o"
+                          rel="drevil"
+                          data-content="选择用作事件源的 COS 存储桶，该存储桶必须位于函数所在地域 <a  href='http://console.cloud.tencent.com/cos'>打开腾讯COS管理页</a>"
+                          data-container="body" data-toggle="popover" data-placement="bottom"></i></div>
+                      <div class="col-4">
+                        <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                          v-model="cosgw.bucket">
+                          <option :value="cos.Name" v-for="cos in buckets">{{cos.Name}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12 row">
+                      <div class=" col-form-label col-12">事件类型</div>
+                      <div class="col-4">
+                        <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg "
+                          v-model="cosgw.events">
+                          <option value="cos:ObjectCreated:Put">使用 Put Object 接口创建文件时触发</option>
+                          <option value="cos:ObjectCreated:Post">使用 Post Object 接口创建文件时触发</option>
+                          <option value="cos:ObjectCreated:Copy">使用 Put Object - Copy 接口创建文件时触发</option>
+                          <option value="cos:ObjectCreated:CompleteMultipartUpload">使用 CompleteMultipartUpload 接口创建文件时触发
+                          </option>
+                          <option value="cos:ObjectCreated:Origin">发生 CDN 回源时触发</option>
+                          <option value="cos:ObjectCreated:Replication">通过跨区域复制创建对象时触发</option>
+                          <option value="cos:ObjectRemove:*">以下提到的所有删除事件均可触发</option>
+                          <option value="cos:ObjectRemove:Delete">在未开启版本管理的 Bucket 下使用 Delete Object 接口删除的 Object，或者使用
+                            versionid 删除指定版本的 Object 时触发</option>
+                          <option value="cos:ObjectRemove:DeleteMarkerCreated">在开启或者暂停版本管理的 Bucket 下使用 Delete Object
+                            接口删除的
+                            Object 时触发</option>
+                          <option value="cos:ObjectRestore:Post">创建了归档恢复的任务时触发</option>
+                          <option value="cos:ObjectRestore:Completed">完成归档恢复任务时触发</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="col-12 row">
+                      <div class="col-form-label col-12">前缀过滤<i class=" g-ml-10 fa fa-question-circle-o" rel="drevil"
+                          data-content="前缀过滤通常用于过滤指定目录下的文件事件，例如前缀过滤为test/，则仅 test/ 目录下的文件事件才可以触发函数，hello/目录下的文件事件不应该触发函数。更详细的规则请参考<a  href='https://cloud.tencent.com/document/product/583/9707'>文档</a>"
+                          data-container="body" data-toggle="popover" data-placement="bottom"></i> </div>
+                      <div class="col-4"><input class="form-control rounded-0 form-control-md" placeholder="前缀过滤"
+                          v-model="cosgw.prefix"></div>
+                    </div>
+
+                    <div class="col-12 row">
+                      <div class="col-12 col-form-label ">后缀过滤 <i class="g-ml-10 fa fa-question-circle-o" rel="drevil"
+                          data-content="后缀过滤通常用于过滤指定类型或后缀的文件事件，例如后缀过滤为.jpg，则仅 .jpg 结尾的文件的事件才可以触发函数，.png结尾的文件不应该触发函数。更详细的规则请参考<a  href='https://cloud.tencent.com/document/product/583/9707'>文档</a>"
+                          data-container="body" data-toggle="popover" data-placement="bottom"></i>
+                      </div>
+                      <div class="col-4">
+                        <input class="form-control rounded-0 form-control-md" placeholder="后缀过滤" v-model="cosgw.suffix">
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row g-brd-around g-brd-gray-light-v2 g-mt-20 g-pa-20  g-font-size-12"
+                    v-show="event=='api'">
+
+                    <div class="form-group col-6" v-show="!simpleMode">
+                      <label for="example-text-input" class="col-form-label">API名称</label>
+                      <input class="form-control rounded-0 form-control-md" placeholder="apigw" v-model="apigw.name">
+                      <small>仅用来标识API的用途</small>
+                    </div>
+
+                    <div class="form-group col-6"  v-show="!simpleMode">
+                      <label for="example-text-input" class="col-form-label">备注说明</label>
+                      <input class="form-control rounded-0 form-control-md" placeholder="备注"
+                        v-model="apigw.description">
+                    </div>
+
+                    <div class="col-3">
+                      <div for="example-text-input" class="col-form-label">路径类型</div>
+                      <div>
+                        <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                          v-model="apigw.apitype">
+                          <option value="fix">固定路径</option>
+                          <option value="dynamic">追加可变路径</option>
+                        </select>
+                      </div>
+                      <small>动态路径支持在路径中包含动态参数</small>
+                    </div>
+
+                    <div class="form-group g-mb-10 col-6">
+                      <label for="example-text-input" class="col-form-label">固定路径部分</label>
+                      <input class="form-control rounded-0 form-control-md" placeholder="固定路径部分" v-model="apigw.path">
+                      <small>访问的URL路径,支持“/”、“=/”、“^~/”开头，大小写字母、数字、和$-_.+!*'(),/%等符合URL规则的符号<br>
+                        默认是: /命名空间/文件名/函数名
+                      </small>
+                    </div>
+
+
+
+                    <div class="form-group g-mb-10 col-12 g-brd-bottom g-brd-gray-light-v1"
+                      v-if="apigw.apitype=='dynamic'">
+                      <div for="example-text-input"
+                        class="col-form-label g-brd-bottom g-brd-gray-light-v1 g-pb-10 g-mb-10">自定义PATH路径参数</div>
+
+                      <div class="w-100 row g-nowrap g-py-20 g-bg-black-opacity-0_1" v-for="(para, inx) in apigw.param">
+                        <div class="col-2">
+                          <div>动态路径参数</div>
+                          <input class="form-control rounded-0 form-control-md" v-model="para.name" placeholder="参数名">
+                        </div>
+
+                        <div class="col-2">
+                          <div>是否必须</div>
+                          <div>
+                            <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                              v-model="para.required">
+                              <option value="TRUE">是</option>
+                              <option value="FALSE">否</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-2">
+                          <div>默认值</div>
+                          <input class="form-control rounded-0 form-control-md" v-model="para.defaultValue"
+                            placeholder="默认值" :disabled="para.required=='FALSE'">
+                        </div>
+
+                        <div class="col-2">
+                          <div>类型</div>
+                          <div>
+                            <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                              v-model="para.type">
+                              <option value="int">int</option>
+                              <option value="string">string</option>
+                            </select>
+                          </div>
+                        </div>
+
+                        <div class="col-4">
+                          <div class="g-color-white">1</div>
+
+                          <a href="#!" class="btn btn-lg u-btn-outline-darkgray g-mr-10  g-brd-none"
+                            @click="delApigwPara(inx)">
+                            <i class="fa fa-minus"></i>
+                          </a>
+                          <a href="#!" class="btn btn-lg u-btn-outline-darkgray g-mr-10 g-brd-none"
+                            v-if="inx==apigw.param.length-1" @click="addApigwPara">
+                            <i class="fa fa-plus"></i>
+                          </a>
+                        </div>
+
+                      </div>
+                    </div>
+
+                    <div class="form-group g-mb-10 col-3">
+                      <label for="example-text-input" class="col-form-label">CORS支持</label>
+                      <div class="w-100">
+                        <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                          v-model="apigw.cors">
+                          <option value="TRUE">开启CORS</option>
+                          <option value="FALSE">关闭CORS</option>
+                        </select>
+                      </div>
+                      <small>通过WEB的AJAX访问需要CORS支持</small>
+                    </div>
+
+                    <div class="form-group g-mb-10 col-3">
+                      <label for="example-text-input" class="col-form-label">集成响应</label>
+                      <div class="w-100">
+                        <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                          v-model="apigw.integratedResponse">
+                          <option value="TRUE">开启</option>
+                          <option value="FALSE">关闭</option>
+                        </select>
+                      </div>
+                      <small>最常见是微信支付回传通知</small>
+                    </div>
+
+                    <div class="form-group g-mb-10 col-4">
+                      <label for="example-text-input" class="col-form-label">前端类型</label>
+                      <div class="w-100">
+                        <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                          v-model="apigw.protocols">
+                          <option value="http">HTTP</option>
+                          <option value="https">HTTPS</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group g-mb-10 col-4">
+                      <label for="example-text-input" class="col-form-label">请求方法</label>
+                      <div class="w-100">
+                        <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                          v-model="apigw.method">
+                          <option value="GET">GET</option>
+                          <option value="POST">POST</option>
+                          <option value="PUT">PUT</option>
+                          <option value="DELETE">DELETE</option>
+                          <option value="HEAD">HEAD</option>
+                          <option value="ANY">ANY</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group g-mb-10 col-4">
+                      <label for="example-text-input" class="col-form-label">返回类型</label>
+                      <div class="w-100">
+                        <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                          v-model="apigw.responseType">
+                          <option value="JSON">JSON</option>
+                          <option value="HTML">HTML</option>
+                          <option value="TEXT">TEXT</option>
+                          <option value="BINARY">BINARY</option>
+                          <option value="XML">XML</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div class="form-group g-mb-10 col-4">
+                      <label for="example-text-input" class="col-form-label">API网关服务</label>
+                      <!-- <input class="form-control rounded-0 form-control-md" v-model="apigw.serviceId"> -->
+                      <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                        v-model="apigw.serviceId">
+                        <option :value="gate.serviceId" v-for="(gate, ainx) in apigw.apigateways" :checked="ainx==0">
+                          {{gate.serviceName}}</option>
+                      </select>
+
+                    </div>
+
+
+
+                    <div class="form-group g-mb-10 col-4">
+                      <label for="example-text-input" class="col-form-label">发布环境</label>
+                      <select class="u-select-v1 g-color-black custom-select rounded-0 form-control-lg w-100"
+                        v-model="apigw.environment">
+                        <option value="test">测试</option>
+                        <option value="prepub">预发布</option>
+                        <option value="release">发布</option>
+                      </select>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="w-100 text-right">
+            <a href="#!" class="btn btn-md u-btn-darkgray g-mr-10 g-mb-15" @click="addscf">新增SCF函数</a>
+          </div>
+
+
+
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+
+  <script>
+    const { dialog, shell } = require('electron').remote
+
+    // const tencentcloud = require("tencentcloud-sdk-nodejs");
+    // var fs = require("fs");
+    // var Vpc = require("../qcloud/vpc.js");
+
+
+
+    window.nodeRequire = require;
+    delete window.require;
+    delete window.exports;
+    delete window.module;
+
+
+  </script>
+
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+
+  <script src="../assets/vendor/popper.min.js"></script>
+  <script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+
+  <!-- <script src="../assets/vendor/bootstrap/offcanvas.js"></script> -->
+
+
+  <!-- <script src="../assets/vendor/dzsparallaxer/dzsparallaxer.js"></script> -->
+  <!-- <script src="../assets/vendor/dzsparallaxer/dzsscroller/scroller.js"></script> -->
+  <!-- <script src="../assets/vendor/dzsparallaxer/advancedscroller/plugin.js"></script> -->
+  <!-- <script src="../assets/vendor/masonry/dist/masonry.pkgd.min.js"></script> -->
+  <!-- <script src="../assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script> -->
+  <!-- <script src="../assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script> -->
+  <!-- <script src="../assets/vendor/slick-carousel/slick/slick.js"></script> -->
+  <!-- <script src="../assets/vendor/fancybox/jquery.fancybox.min.js"></script> -->
+
+  <script src="../assets/js/hs.core.js"></script>
+  <script src="../assets/js/components/hs.header.js"></script>
+  <!-- <script src="../assets/js/helpers/hs.hamburgers.js"></script> -->
+  <!-- <script src="../assets/js/components/hs.dropdown.js"></script> -->
+  <!-- <script src="../assets/js/components/hs.scrollbar.js"></script> -->
+  <!-- <script src="../assets/js/components/hs.popup.js"></script> -->
+  <!-- <script src="../assets/js/components/hs.carousel.js"></script> -->
+  <!-- <script src="../assets/js/components/hs.go-to.js"></script> -->
+  <script src="../vue.js"></script>
+  <!-- <script src="../assets/vendor/cubeportfolio-full/cubeportfolio/js/jquery.cubeportfolio.min.js"></script> -->
+  <!-- <script src="../assets/js/components/hs.cubeportfolio.js"></script> -->
+  <script src="./js/addfunction.js"></script>
+  <script src="./js/uikit.js"></script>
+
+  <script>
+    $(document).on('click', 'a[href^="http"]', function (event) {
+      event.preventDefault();
+      shell.openExternal(this.href);
+    });
+
+
+
+    $(window).on('load', function () {
+      // initialization of header
+      $.HSCore.components.HSHeader.init($('#js-header'));
+    });
+  </script>
+
+</body>
+
+</html>

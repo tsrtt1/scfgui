@@ -1,0 +1,28 @@
+myFunction:
+  component: "@serverless/tencent-scf"
+  inputs:
+    name: testapi
+    enableRoleAuth: true
+    codeUri: /Users/zhangtao/Downloads/testscf
+    handler: test.testapi
+    runtime: Php7
+    region: ap-beijing
+    description: "12131313"
+    memorySize: 64
+    timeout: 3
+    events:
+      - apigw:
+          name: testapi
+          parameters:
+            serviceId: service-jrwx4qsl
+            protocols:
+              - https
+            description: adfasdfasdfasdf
+            environment: test
+            endpoints:
+              - path: /testapi
+                method: POST
+                responseType: JSON
+                description: 测试
+                enableCORS: FALSE
+                serviceTimeout: 10

@@ -1,0 +1,25 @@
+component: scf
+name: test
+stage: sscf
+inputs:
+  name: test
+  namespace: default
+  enableRoleAuth: true
+  handler: wechatapi.test
+  runtime: Php7
+  region: ap-guangzhou
+  description: ""
+  memorySize: 64
+  timeout: 30
+  src:
+    src: /Users/zhangtao/Documents/xiaochengxu/yidu/yiduserver
+    exclude:
+      - /Users/zhangtao/Documents/xiaochengxu/yidu/yiduserver/unittest
+  tags: {}
+  environment: {}
+  events:
+    - timer:
+        name: aaaa
+        parameters:
+          cronExpression: 0 */59 * * * * *
+          enable: true

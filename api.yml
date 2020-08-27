@@ -1,0 +1,23 @@
+myFunction:
+  component: "@serverless/tencent-scf"
+  inputs:
+    name: testapi
+    enableRoleAuth: true
+    codeUri: /Users/zhangtao/Downloads/testscf
+    handler: t.testapi
+    runtime: PHP7
+    region: ap-beijing
+    description: aaaaa
+    memorySize: 64
+    timeout: 3
+    exclude:
+      - /Users/zhangtao/Documents/antpanzi
+      - /Users/zhangtao/Documents/antpanzi/server
+    include:
+      - /Users/zhangtao/Documents/antpanzi
+      - /Users/zhangtao/Documents/xiaochengxu/蚁工
+    tags: {}
+    environment: {}
+    vpcConfig:
+      subnetId: subnet-aa2fpefz
+      vpcId: vpc-hexnhrds

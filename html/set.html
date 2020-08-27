@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>配置</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/uikit.css">
+
+
+  <link rel="stylesheet" href="../assets/css/styles.op-app.css">
+
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/offcanvas.css">
+
+  <link rel="stylesheet" href="../assets/vendor/icon-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../assets/vendor/icon-line/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../assets/vendor/icon-etlinefont/style.css">
+  <link rel="stylesheet" href="../assets/vendor/icon-line-pro/style.css">
+  <link rel="stylesheet" href="../assets/vendor/icon-hs/style.css">
+  <link rel="stylesheet" href="../assets/vendor/dzsparallaxer/dzsparallaxer.css">
+  <link rel="stylesheet" href="../assets/vendor/dzsparallaxer/dzsscroller/scroller.css">
+  <link rel="stylesheet" href="../assets/vendor/dzsparallaxer/advancedscroller/plugin.css">
+  <link rel="stylesheet" href="../assets/vendor/animate.css">
+  <link rel="stylesheet" href="../assets/vendor/hamburgers/hamburgers.min.css">
+  <link rel="stylesheet" href="../assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.min.css">
+  <link rel="stylesheet" href="../assets/vendor/slick-carousel/slick/slick.css">
+  <link rel="stylesheet" href="../assets/vendor/fancybox/jquery.fancybox.css">
+
+
+  <link rel="stylesheet" href="../assets/css/unify-core.css">
+  <link rel="stylesheet" href="../assets/css/unify-components.css">
+  <link rel="stylesheet" href="../assets/css/unify-globals.css">
+  <link rel="stylesheet" href="../assets/vendor/cubeportfolio-full/cubeportfolio/css/cubeportfolio.min.css">
+
+  <link rel="stylesheet" href="./css/load.css">
+
+
+</head>
+
+<body id="bbody">
+  <main id="main">
+
+    <header id="headertop" class="u-header u-header--toggle-section u-header--change-appearance"
+        data-header-fix-moment="300" style="z-index: 999;">
+        <div
+          class="u-header__section u-header__section--light u-header__section--dark g-bg-gray-dark-v3 g-transition-0_3 g-py-10 ">
+          <div class="g-mx-50">
+
+            <div
+              class="row flex-column flex-sm-row justify-content-between align-items-center text-uppercase g-font-weight-600 g-color-white g-font-size-12 g-mx-0--lg">
+
+              <div class="col-auto d-flex ">
+
+                <a class="btn text-center g-color-white g-mr-20 " href="addfunction.html">
+                  <i class="fa fa-plus g-font-size-18 g-valign-middle  g-mr-10 g-mt-minus-2"></i>
+                  <div>新增云函数</div>
+                </a>
+
+                <a class="btn text-center   g-mr-20 g-color-white" href="invoke.html">
+                  <i class="fa fa-bug g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>云函数调试</div>
+                </a>
+
+                <a class="btn text-center g-mr-20  g-color-white" href="listfunction.html">
+                  <i class="fa fa-list-ul g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>函数列表</div>
+                </a>
+
+                <a class="btn text-center  g-color-white" href="listlog.html">
+                  <i class="fa fa-files-o g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>执行日志</div>
+                </a>
+
+              </div>
+
+           
+
+              <div class="col-auto d-flex">
+
+                <a class="btn text-center g-color-gray-dark-v3 g-mr-20 " href="#!">
+                  <i class="fa fa-plus g-font-size-18 g-valign-middle  g-mr-10 g-mt-minus-2"></i>
+                  <div>新增云函数</div>
+                </a>
+
+                <a class="btn text-center   g-mr-20 g-color-white" href="chart.html">
+                  <i class="fa fa-pie-chart g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>运维图表</div>
+                </a>
+
+
+                <a class="btn text-center g-mr-20 g-color-orange " href="set.html">
+                  <i class="fa fa-cog g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>项目配置</div>
+                </a>
+
+                <a class="btn text-center g-color-white" href="list.html">
+                  <i class="fa fa-th-large g-font-size-18 g-valign-middle  g-mr-10 g-mt-minus-2"></i>
+                  <div>退出登录</div>
+                </a>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </header>
+
+    <section id="appScreens" class="g-py-50">
+
+      <div class="w-100 text-center" v-if="isload">
+        <div class="lds-roller g-mt-140">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+
+
+      <div class="container" style="display: none;" v-show="!isload">
+        <!-- Filter -->
+        <ul id="appScreensCubePortfolioFilter"
+          class="nav justify-content-center d-block d-md-flex u-nav-v5-1 text-uppercase g-line-height-1_4 g-font-weight-700 g-font-size-11 g-nowrap g-brd-bottom--md g-brd-gray-light-v4 g-mb-20 g-font-size-14">
+          <!--  -->
+          <li class="cbp-filter-item nav-item text-center " :class="{'cbp-filter-item-active':scf.showactive}"
+            v-for="scf in scfs" @click="changescf(scf.id)">
+            <span class="nav-link g-pb-15--md g-mr-30--md g-px-20">{{scf.name}}</span>
+          </li>
+
+          <li class="cbp-filter-item nav-item " :class="{'cbp-filter-item-active':showaddproject}" @click="showaddpro">
+            <span class="nav-link g-pb-15--md g-mr-30--md g-px-20">添加项目 <i class="fa fa-plus"></i> </span>
+          </li>
+
+        </ul>
+
+
+
+        <div v-if="!showaddproject" class="g-pa-50">
+          <h2 class="h5 g-color-black mb-4">项目配置</h2>
+
+          <div class="form-group row g-mb-25">
+            <label for="example-text-input" class="col-2 col-form-label">代码目录</label>
+            <div class="col-10">
+              <div class="input-group g-brd-primary--focus">
+                <a class="btn input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0"
+                  @click="chosecodepath(scf.id)" href="#!">
+                  <i class="fa fa-plus"></i>
+                </a>
+                <input class="form-control form-control-md rounded-0" type="text" placeholder="点击左侧加号选择项目根目录"
+                  v-model="scf.project.codeUri" readonly>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group row g-mb-25">
+            <label for="example-text-input" class="col-2 col-form-label">内网配置</label>
+            <div class="col-10 ">
+              <div class="d-flex">
+
+                <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radGroup1_1" type="radio" value="false"
+                    type="radio" v-model="scf.project.vpcConfig.isvpc" placeholder="请选择" @click="hidvpc">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  只开启外网
+                </label>
+
+                <!-- End Radio Option 1 -->
+
+                <!-- Radio Option 2 -->
+                <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radGroup1_1" value="true" type="radio"
+                    v-model="scf.project.vpcConfig.isvpc" placeholder="请选择" @click="showvpc(scf)">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  开启内网配置
+                </label>
+
+                <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
+                  <a class=" fa fa-question-circle-o g-ml-10 g-font-size-16" href="#!" @click="showvpcinfo"></a>
+                </label>
+              </div>
+
+              <div class="g-color-red">{{vpcinfo}}</div>
+
+              <div class="d-flex " v-if="scf.project.vpcConfig.isvpc=='true'">
+                <div v-if="isloadvpc">
+                  <i class="fa fa-spinner fa-spin g-mr-10"></i>
+                </div>
+
+                <select class="custom-select rounded-0 g-width-150" v-model="chkvpc" :disabled="vpcs.length==0">
+                  <option value='' disabled selected style='display:none;' v-if="isloadvpc">正在加载</option>
+                  <option value='' disabled selected style='display:none;' v-if="!isloadvpc">请选择私有网络</option>
+                  <option :value="vpc.VpcId" v-for="vpc in vpcs">{{vpc.VpcName}}</option>
+                </select>
+
+                <select class="custom-select rounded-0 g-mx-10 g-width-150" v-model="chksubnet"
+                  :disabled="subnets.length==0">
+                  <option value='' disabled selected style='display:none;' v-if="isloadvpc">正在加载</option>
+                  <option value='' disabled selected style='display:none;' v-if="!isloadvpc">请先选择左侧</option>
+                  <option :value="sub.SubnetId" v-for="sub in subnets">{{sub.SubnetName}}</option>
+                </select>
+
+                <a class="btn u-btn-outline-bluegray rounded-0 g-ml-30" href="https://console.cloud.tencent.com/vpc"> <i
+                    class="fa fa-plus g-mr-3"></i>
+                  去创建子网</a>
+              </div>
+
+              <div class="alert alert-info alert-dismissible fade  g-mt-10 show " role="alert" v-if="shownetinfo">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="hidvpcinfo">
+                  <span aria-hidden="true">×</span>
+                </button>
+
+                <h4 class="h5">
+                  <i class="fa fa-info-circle"></i>
+                  网络状态说明:
+                </h4>
+                <ul class="u-alert-list g-mt-10">
+                  <li>Serverless Framework Component 自动化部署工具在网络方面尚未完善</li>
+                  <li>只开启外网:适用于单纯计算,默认的SCF网络状态,此时SCF不能通过内部IP访问对象存储\数据库等腾讯云资源</li>
+                  <li>开启内网:需要先在腾讯云后台配置私有网络,并将要访问的资源统一部署在此私有网络,内网配置方法见腾讯云文档或腾讯云提交工单寻求帮助</li>
+                </ul>
+
+              </div>
+
+            </div>
+          </div>
+
+
+
+          <div class="form-group row g-mb-25">
+            <label for="example-text-input" class="col-2 col-form-label">API网关服务</label>
+            <div class="col-10 ">
+              <div class="g-color-red">{{apiwarninfo}}</div>
+
+              <div class=" ">
+                <div v-if="isloadapi">
+                  <i class="fa fa-spinner fa-spin g-mr-10"></i>
+                </div>
+
+                <label class="form-check-inline u-check g-pl-25" v-for="api in apigateways">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" type="checkbox" checked=""
+                    :value="api.ServiceId" v-model="chkapigateways" @change="changeapigateway">
+                  <div class="u-check-icon-checkbox-v6 g-absolute-centered--y g-left-0">
+                    <i class="fa" data-check-icon=""></i>
+                  </div>
+                  {{api.ServiceName}}
+                </label>
+
+
+
+                <a class="btn u-btn-outline-bluegray rounded-0 g-ml-30"
+                  href="https://console.cloud.tencent.com/apigateway/service"> <i class="fa fa-plus g-mr-3"></i>
+                  去创建API网关</a>
+              </div>
+
+              <div class="alert alert-info alert-dismissible fade  g-mt-10 show " role="alert" v-if="shownetinfo">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close" @click="hidvpcinfo">
+                  <span aria-hidden="true">×</span>
+                </button>
+
+                <h4 class="h5">
+                  <i class="fa fa-info-circle"></i>
+                  网络状态说明:
+                </h4>
+                <ul class="u-alert-list g-mt-10">
+                  <li>Serverless Framework Component 自动化部署工具在网络方面尚未完善</li>
+                  <li>只开启外网:适用于单纯计算,默认的SCF网络状态,此时SCF不能通过内部IP访问对象存储\数据库等腾讯云资源</li>
+                  <li>开启内网:需要先在腾讯云后台配置私有网络,并将要访问的资源统一部署在此私有网络,内网配置方法见腾讯云文档或腾讯云提交工单寻求帮助</li>
+                </ul>
+
+              </div>
+
+            </div>
+          </div>
+
+
+
+
+
+          <div class="form-group row g-mb-25">
+            <label for="example-text-input" class="col-2 col-form-label">编程语言</label>
+            <div class="col-10">
+              <div class="g-mb-15">
+
+                <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radInline1_1" type="radio"
+                    v-model="scf.project.runtime" value="Php7">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  PHP7
+                </label>
+
+                <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radInline1_1" type="radio"
+                    v-model="scf.project.runtime" value="Php5">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  PHP5
+                </label>
+
+                <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radInline1_1" type="radio"
+                    v-model="scf.project.runtime" value="Python3.6">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  Python3.6
+                </label>
+
+                <label class="form-check-inline u-check g-pl-25 ml-0">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radInline1_1" type="radio"
+                    v-model="scf.project.runtime" value="Python2.7">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  Python2.7
+                </label>
+
+                <label class="form-check-inline u-check g-pl-25 ml-0">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radInline1_1" type="radio"
+                    v-model="scf.project.runtime" value="Java8">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  Java8
+                </label>
+
+                <label class="form-check-inline u-check g-pl-25 ml-0">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radInline1_1" type="radio"
+                    v-model="scf.project.runtime" value="Go1">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  Golang1
+                </label>
+
+                <label class="form-check-inline u-check g-pl-25 ml-0">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radInline1_1" type="radio"
+                    v-model="scf.project.runtime" value="Nodejs6.10">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  Nodejs6.10
+                </label>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="form-group row g-mb-25">
+            <label for="example-text-input" class="col-2 col-form-label">区域</label>
+            <div class="col-10">
+              <div class="g-mb-15">
+                <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="area" type="radio" value="ap-guangzhou"
+                    v-model="scf.project.region">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  广州
+                </label>
+
+                <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="area" type="radio" value="ap-shanghai"
+                    v-model="scf.project.region">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  上海
+                </label>
+
+                <label class="form-check-inline u-check g-pl-25 ml-0 g-mr-25">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="area" type="radio" value="ap-beijing"
+                    v-model="scf.project.region">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  北京
+                </label>
+
+                <label class="form-check-inline u-check g-pl-25 ml-0">
+                  <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="area" type="radio" value="ap-chengdu"
+                    v-model="scf.project.region">
+                  <div class="u-check-icon-radio-v4 g-absolute-centered--y g-left-0 g-width-18 g-height-18">
+                    <i class="g-absolute-centered d-block g-width-10 g-height-10 g-bg-primary--checked"></i>
+                  </div>
+                  成都
+                </label>
+
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="form-group row g-mb-25">
+            <label for="example-text-input" class="col-2 col-form-label">打包排除目录</label>
+            <div class="col-10">
+              <div class="input-group ">
+                <a href="#!" @click="addexclude"
+                  class="btn input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0 g-py-12">
+                  <i class="fa fa-plus"></i>
+                </a>
+                <!-- <textarea class="form-control form-control-md g-resize-none rounded-0" rows="4"
+                  placeholder="点击左侧按钮可以添加不被上传到SCF的目录"></textarea> -->
+                <div class="w-100 g-brd-gray-light-v2 g-brd-top">
+                  <div class="input-group" v-for="(dir, inx) in scf.project.exclude">
+                    <div disabled class="form-control form-control-md rounded-0 g-brd-top-none" type="text"
+                      placeholder="点击左侧添加目录" :value="dir">{{dir}}</div>
+
+                    <a class="btn input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0 g-brd-top-none"
+                      @click="openfolder(dir)">
+                      <i class="fa fa-folder-open-o"></i>
+                    </a>
+
+                    <a class="btn input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0 g-brd-top-none"
+                      @click="delexclude(inx)">
+                      <i class="fa fa-remove"></i>
+                    </a>
+                  </div>
+
+                  <div class="input-group" v-if="scf.project.exclude.length==0">
+                    <input disabled class="form-control form-control-md rounded-0 g-brd-top-none" type="text"
+                      placeholder="点击左侧添加目录">
+                  </div>
+
+                </div>
+
+              </div>
+              <small>上传到SCF服务器的代码将排除上述目录,如GIT node_model目录</small>
+            </div>
+          </div>
+
+          <!-- <div class="form-group row g-mb-25">
+              <label for="example-text-input" class="col-2 col-form-label">打包包含目录</label>
+              <div class="col-10">
+                <div class="input-group ">
+                  <a href="#!" @click="addinclude"
+                    class="btn input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0 g-py-12">
+                    <i class="fa fa-plus"></i>
+                  </a>
+                  <div class="w-100 g-brd-gray-light-v2 g-brd-top">
+                    <div class="input-group" v-for="(dir, inx) in scf.project.include">
+                      <div disabled class="form-control form-control-md rounded-0 g-brd-top-none" type="text"
+                        placeholder="点击左侧添加目录" :value="dir">{{dir}}</div>
+
+                      <a class="btn input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0 g-brd-top-none"
+                        @click="openfolder(dir)">
+                        <i class="fa fa-folder-open-o"></i>
+                      </a>
+
+                      <a class="btn input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0 g-brd-top-none"
+                        @click="delinclude(inx)">
+                        <i class="fa fa-remove"></i>
+                      </a>
+                    </div>
+
+                    <div class="input-group" v-if="scf.project.include.length==0">
+                      <input disabled class="form-control form-control-md rounded-0 g-brd-top-none" type="text"
+                        placeholder="点击左侧添加目录">
+                    </div>
+
+                  </div>
+
+                </div>
+                <small>代码目录外,额外上传的目录文件</small>
+              </div>
+            </div> -->
+
+          <div class="w-100 text-right">
+            <button href="#!" class="btn btn-md u-btn-red" @click="delproject">删除</button>
+          </div>
+
+        </div>
+
+        <div v-if="showaddproject">
+          <div class="">
+            <!-- Form -->
+            <form class="g-pa-50">
+              <h2 class="h5 g-color-black mb-4">新增秘钥信息</h2>
+
+              <div class="mb-4">
+                <div class="input-group g-brd-primary--focus">
+                  <span class="input-group-addon g-width-45 g-brd-gray-light-v1 g-color-primary">
+                    <i class="icon-finance-067 u-line-icon-pro"></i>
+                  </span>
+                  <input v-model="appid"
+                    class="form-control g-color-black g-brd-left-none g-bg-white g-brd-gray-light-v1 g-pl-0 g-pr-15 g-py-15"
+                    placeholder="APP_ID">
+                </div>
+                <small id="emailHelp" class="form-text ">腾讯云的"访问秘钥"->"API秘钥"的app Id</small>
+              </div>
+
+
+              <div class="mb-4">
+                <div class="input-group g-brd-primary--focus">
+                  <span class="input-group-addon g-width-45 g-brd-gray-light-v1 g-color-primary">
+                    <i class="icon-finance-067 u-line-icon-pro"></i>
+                  </span>
+                  <input v-model="id"
+                    class="form-control g-color-black g-brd-left-none g-bg-white g-brd-gray-light-v1 g-pl-0 g-pr-15 g-py-15"
+                    placeholder="SECRET_ID">
+                </div>
+                <small id="emailHelp" class="form-text ">腾讯云的"访问秘钥"->"API秘钥"的SecretId</small>
+              </div>
+
+              <div class="mb-4">
+                <div class="input-group g-brd-primary--focus">
+                  <span class="input-group-addon g-width-45 g-brd-gray-light-v1 g-color-primary">
+                    <i class="icon-real-estate-056 u-line-icon-pro"></i>
+                  </span>
+                  <input v-model="key"
+                    class="form-control g-color-black g-brd-left-none g-bg-white g-brd-gray-light-v1 g-pl-0 g-pr-15 g-py-15"
+                    type="password" placeholder="SECRET_KEY">
+                </div>
+                <small id="emailHelp" class="form-text ">腾讯云的"访问秘钥"->"API秘钥"的SecretKey</small>
+              </div>
+
+              <div class="mb-4">
+                <div class="input-group g-brd-primary--focus">
+                  <span class="input-group-addon g-width-45 g-brd-gray-light-v1 g-color-primary">
+                    <i class="icon-real-estate-001 u-line-icon-pro"></i>
+                  </span>
+                  <input v-model="name"
+                    class="form-control g-color-black g-brd-left-none g-bg-white g-brd-gray-light-v1 g-pl-0 g-pr-15 g-py-15"
+                    type="" placeholder="项目名">
+
+                </div>
+                <small id="emailHelp" class="form-text ">用于多项目切换</small>
+
+              </div>
+
+
+
+              <div class="g-mb-50 text-right">
+                <button class="btn btn-md  u-btn-black rounded " type="button" @click="save">新增</button>
+              </div>
+
+
+            </form>
+            <!-- End Form -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+
+
+  <script>
+    //     const { dialog, shell } = require('electron').remote
+
+    // const tencentcloud = require("tencentcloud-sdk-nodejs");
+    // var fs = require("fs");
+    // var config = require("../config");
+    // var Vpc = require("../qcloud/vpc.js");
+
+
+    // const Vue = require("../vue");
+
+    window.nodeRequire = require;
+    delete window.require;
+    delete window.exports;
+    delete window.module;
+  </script>
+
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+
+  <script src="../assets/vendor/popper.min.js"></script>
+  <script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+
+  <script src="../assets/vendor/bootstrap/offcanvas.js"></script>
+
+
+  <script src="../assets/vendor/dzsparallaxer/dzsparallaxer.js"></script>
+  <script src="../assets/vendor/dzsparallaxer/dzsscroller/scroller.js"></script>
+  <script src="../assets/vendor/dzsparallaxer/advancedscroller/plugin.js"></script>
+  <script src="../assets/vendor/masonry/dist/masonry.pkgd.min.js"></script>
+  <script src="../assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="../assets/vendor/slick-carousel/slick/slick.js"></script>
+  <script src="../assets/vendor/fancybox/jquery.fancybox.min.js"></script>
+
+  <script src="../assets/js/hs.core.js"></script>
+  <script src="../assets/js/components/hs.header.js"></script>
+  <script src="../assets/js/helpers/hs.hamburgers.js"></script>
+  <script src="../assets/js/components/hs.dropdown.js"></script>
+  <script src="../assets/js/components/hs.scrollbar.js"></script>
+  <script src="../assets/js/components/hs.popup.js"></script>
+  <script src="../assets/js/components/hs.carousel.js"></script>
+  <script src="../assets/js/components/hs.go-to.js"></script>
+  <script src="../vue.js"></script>
+  <script src="../assets/vendor/cubeportfolio-full/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
+  <script src="../assets/js/components/hs.cubeportfolio.js"></script>
+  <script src="./js/set.js"></script>
+  <script src="./js/uikit.js"></script>
+
+  <script>
+    $(document).on('click', 'a[href^="http"]', function (event) {
+      event.preventDefault();
+      shell.openExternal(this.href);
+    });
+
+    $(window).on('load', function () {
+
+
+      // initialization of header
+      $.HSCore.components.HSHeader.init($('#js-header'));
+    });
+  </script>
+
+</body>
+
+</html>

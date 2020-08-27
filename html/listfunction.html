@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>云函数列表</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./css/uikit.css">
+
+
+  <link rel="stylesheet" href="../assets/css/styles.op-app.css">
+
+  <link rel="stylesheet" href="../assets/vendor/bootstrap/bootstrap.min.css">
+
+  
+  <link rel="stylesheet" href="../assets/vendor/icon-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../assets/vendor/icon-line/css/simple-line-icons.css">
+  <link rel="stylesheet" href="../assets/vendor/icon-etlinefont/style.css">
+  <link rel="stylesheet" href="../assets/vendor/icon-line-pro/style.css">
+  <link rel="stylesheet" href="../assets/vendor/icon-hs/style.css">
+
+
+  
+
+  <link rel="stylesheet" href="../assets/vendor/dzsparallaxer/dzsparallaxer.css">
+  <link rel="stylesheet" href="../assets/vendor/dzsparallaxer/dzsscroller/scroller.css">
+  <link rel="stylesheet" href="../assets/vendor/dzsparallaxer/advancedscroller/plugin.css">
+  <link rel="stylesheet" href="../assets/vendor/animate.css">
+  <link rel="stylesheet" href="../assets/vendor/custombox/custombox.min.css">
+
+  <link rel="stylesheet" href="../assets/vendor/hamburgers/hamburgers.min.css">
+  <link rel="stylesheet" href="../assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.min.css">
+  <link rel="stylesheet" href="../assets/vendor/slick-carousel/slick/slick.css">
+  <link rel="stylesheet" href="../assets/vendor/fancybox/jquery.fancybox.css">
+
+
+  <link rel="stylesheet" href="../assets/css/unify-core.css">
+  <link rel="stylesheet" href="../assets/css/unify-components.css">
+  <link rel="stylesheet" href="../assets/css/unify-globals.css">
+  <link rel="stylesheet" href="../assets/vendor/cubeportfolio-full/cubeportfolio/css/cubeportfolio.min.css">
+
+
+  <link rel="stylesheet" href="../assets/jquery/jquery-ui.css">
+  <link rel="stylesheet" href="../assets/jquery/style.css">
+  <link rel="stylesheet" href="./css/load.css">
+  <link rel="stylesheet" href="./css/loadline.css">
+
+
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+  </style>
+</head>
+
+<body id="bbody" class="g-bg-secondary">
+
+  <main id="main" class="g-color-black">
+
+    <div class="w-100 text-center g-height-100x" v-if="loading">
+      <div class="lds-roller g-mt-140">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+
+
+    <div style="display: none;" v-show="!loading">
+
+      <header id="headertop" class="u-header u-header--toggle-section u-header--change-appearance"
+        data-header-fix-moment="300" style="z-index: 999;">
+        <div
+          class="u-header__section u-header__section--light u-header__section--dark g-bg-gray-dark-v3 g-transition-0_3 g-py-10 ">
+          <div class="g-mx-50">
+
+            <div
+              class="row flex-column flex-sm-row justify-content-between align-items-center text-uppercase g-font-weight-600 g-color-white g-font-size-12 g-mx-0--lg">
+
+              <div class="col-auto d-flex ">
+
+                <a class="btn text-center g-color-white g-mr-20 " href="addfunction.html">
+                  <i class="fa fa-plus g-font-size-18 g-valign-middle  g-mr-10 g-mt-minus-2"></i>
+                  <div>新增云函数</div>
+                </a>
+
+                <a class="btn text-center   g-mr-20 g-color-white" href="invoke.html">
+                  <i class="fa fa-bug g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>云函数调试</div>
+                </a>
+
+                <a class="btn text-center g-mr-20  g-color-orange" href="listfunction.html">
+                  <i class="fa fa-list-ul g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>函数列表</div>
+                </a>
+
+                <a class="btn text-center  g-color-white" href="listlog.html">
+                  <i class="fa fa-files-o g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>执行日志</div>
+                </a>
+
+              </div>
+
+              <div class="col-auto">
+                <div class="text-center g-color-white d-flex">
+                  <!-- <i class="fa fa-plus g-font-size-18 g-valign-middle  g-mr-10"></i> -->
+                  <!-- 项目切换 -->
+                  <button type="button" class="btn g-bg-transparent g-color-white dropdown-toggle g-font-weight-400"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    {{chkProject.name}}
+                  </button>
+                  <div class="dropdown-menu">
+                    <a class="dropdown-item g-py-10" href="#!" v-for="pro in projects"
+                      @click="changeProject(pro.id)">{{pro.name}}</a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-auto d-flex">
+
+                <a class="btn text-center g-color-gray-dark-v3 g-mr-20 " href="#!">
+                  <i class="fa fa-plus g-font-size-18 g-valign-middle  g-mr-10 g-mt-minus-2"></i>
+                  <div>新增云函数</div>
+                </a>
+
+                <a class="btn text-center   g-mr-20 g-color-white" href="chart.html">
+                  <i class="fa fa-pie-chart g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>运维图表</div>
+                </a>
+
+
+                <a class="btn text-center g-mr-20 g-color-white " href="set.html">
+                  <i class="fa fa-cog g-font-size-18 g-valign-middle g-mr-10 g-mt-minus-2"></i>
+                  <div>项目配置</div>
+                </a>
+
+                <a class="btn text-center g-color-white" href="list.html">
+                  <i class="fa fa-th-large g-font-size-18 g-valign-middle  g-mr-10 g-mt-minus-2"></i>
+                  <div>退出登录</div>
+                </a>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </header>
+
+
+
+
+      <section id="appScreens" class="g-py-90 g-px-30 ">
+
+        <div class="row ">
+          <div class="col-3"></div>
+          <div class="btn-group justified-content g-mb-20 col-6">
+            <label class="u-check g-bg-white" @click="changecate('all')">
+              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radGroupBtn1_1" type="radio" checked="">
+              <span
+                class="btn btn-md btn-block u-btn-outline-lightgray g-color-white--checked g-bg-primary--checked rounded-0">全部云函数</span>
+            </label>
+            <label class="u-check g-bg-white" @click="changecate('local')">
+              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radGroupBtn1_1" type="radio">
+              <span
+                class="btn btn-md btn-block u-btn-outline-lightgray g-color-white--checked g-bg-primary--checked g-brd-left-none--md rounded-0">未部署函数</span>
+            </label>
+            <label class="u-check g-bg-white" @click="changecate('cloud')">
+              <input class="g-hidden-xs-up g-pos-abs g-top-0 g-left-0" name="radGroupBtn1_1" type="radio">
+              <span
+                class="btn btn-md btn-block u-btn-outline-lightgray g-color-white--checked g-bg-primary--checked g-brd-left-none--md rounded-0">已部署函数</span>
+            </label>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-3">
+            <select class="custom-select form-control-lg rounded-0 w-100" v-model="chknamespace" @change="loadConfFun">
+              <option :value="ns.Name" v-for="ns in namespaces" >{{ns.Name}}</option>
+            </select>
+          
+          </div>
+          <div class="col-6"></div>
+
+          <div class="ui-widget col-3 d-flex">
+            <div class="input-group g-brd-primary--focus g-mb-10">
+              
+              <input id="tags" class="form-control form-control-md border-right-0 rounded-0 pr-0" type="text"
+                placeholder="请输入函数名"  @keyup.enter="searchFun" ref="searchKey">
+              <b class="tooltip tooltip-top-right u-tooltip--v1">搜索函数名</b>
+              <div class="input-group-addon d-flex align-items-center g-bg-white g-color-gray-light-v1 rounded-0">
+                <i class="fa fa-search"></i>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="table-responsive">
+          <table class="table table-bordered u-table--v2 g-bg-white">
+            <thead class="text-uppercase g-letter-spacing-1">
+              <tr>
+                <th class="g-font-weight-300 g-color-black text-center">#</th>
+                <th class="g-font-weight-300 g-color-black">函数名</th>
+                <th class="g-font-weight-300 g-color-black">描述</th>
+                <th class="g-font-weight-300 g-color-black">运行环境</th>
+                <th class="g-font-weight-300 g-color-black g-min-width-200">最后更新时间</th>
+                <th class="g-font-weight-300 g-color-black">函数状态</th>
+                <th class="g-font-weight-300 g-color-black text-right">操作</th>
+              </tr>
+            </thead>
+
+            <tbody>
+
+              <tr v-if="showFunctions.length==0" class="text-center">
+                <td colspan="6">无函数信息</td>
+              </tr>
+
+
+              <tr v-for="(fun,inx) in showFunctions">
+                <td class="align-middle text-center">{{fun.inx}}</td>
+
+                <td class="align-middle text-nowrap">
+                  <h4 class="h6 g-mb-2">{{fun.FunctionName}}</h4>
+                </td>
+                <td class="align-middle">{{fun.Description}}</td>
+                <td class="align-middle">{{fun.Runtime}}</td>
+                <td class="align-middle">{{fun.ModTime}}</td>
+                <td class="align-middle">
+                  <div class=" u-btn-primary g-rounded-50 g-py-5 text-center g-px-10" href="#!" v-if="fun.iscloud">
+                    <i class="fa fa-cloud-download g-mr-5"></i>
+                    已部署
+                  </div>
+                  <div class=" u-btn-red g-rounded-50 g-py-5 text-center g-px-10" href="#!" v-else>
+                    <i class="fa fa-cloud-upload g-mr-5"></i>
+                    未部署
+                  </div>
+                </td>
+                <td class="align-middle text-right text-nowrap ">
+
+
+                  <div class="d-flex" v-if="fun.iscloud">
+                    <a class="btn d-block g-mr-10" href="#!">
+                      查看日志
+                    </a>
+
+                    <a class="btn d-block g-mr-10" :href="'invoke.html?fun='+fun.FunctionName+'&ns='+chknamespace">
+                      云端调试
+                    </a>
+                    <a class="btn d-block g-mr-10" href="#!">
+                      配置
+                    </a>
+
+                    <a class="btn d-block" href="#modal-overflow" uk-toggle @click="removefun(fun.FunctionName)">
+                      删除
+                    </a>
+                  </div>
+
+                  <div class="d-flex" v-else>
+                    <a class="btn d-block g-mr-10 g-color-black" href="#modal-overflow" uk-toggle
+                      @click="deployfun(fun.FunctionName)">
+                      一键部署到SCF
+                    </a>
+
+                    <a class="btn d-block g-mr-10 g-color-red" href="#!"
+                      @click="delfun(fun.FunctionName)">
+                      从配置文件删除
+                    </a>
+
+                  </div>
+
+                </td>
+
+
+              </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+
+
+        <!-- Pagination Large -->
+        <div class="text-right">
+          <div class="form-group g-mb-20 w-25">
+            <div class="js-quantity input-group u-quantity-v1 w-100 g-brd-gray-light-v3 g-brd-primary--focus">
+              <div @click="firstPage"
+                class="js-minus input-group-addon d-flex align-items-center g-width-40 g-font-size-16 g-color-gray g-bg-white rounded-0">
+                <i class="fa fa-angle-double-left"></i>
+              </div>
+              <div @click="prePage"
+                class="js-minus input-group-addon d-flex align-items-center g-width-40 g-font-size-16 g-color-gray g-bg-white rounded-0">
+                <i class="fa fa-angle-left"></i>
+              </div>
+              <!-- <input class="js-result form-control text-center g-font-size-16 rounded-0 g-pa-10-16" type="text" value="0" readonly=""> -->
+              <select class="text-center g-px-50 u-select-v1 g-color-black custom-select rounded-0 form-control-lg"
+                v-model="page">
+                <option :value="inx" v-for="inx in cloudFunctionPage">{{inx}}</option>
+              </select>
+
+              <div @click="nextPage"
+                class="js-plus input-group-addon d-flex align-items-center g-width-40 g-font-size-16 g-color-gray g-bg-white rounded-0 g-brd-left-none">
+                <i class="fa fa-angle-right"></i>
+              </div>
+              <div @click="endPage"
+                class="js-plus input-group-addon d-flex align-items-center g-width-40 g-font-size-16 g-color-gray g-bg-white rounded-0">
+                <i class="fa fa-angle-double-right"></i>
+              </div>
+
+            </div>
+          </div>
+          <!-- End Quantity -->
+        </div>
+        <!-- End Pagination Large -->
+
+
+      </section>
+
+
+      <div id="modal-overflow" uk-modal>
+        <div class="uk-modal-dialog">
+          <button class="uk-modal-close-default" type="button" uk-close></button>
+
+          <div class="uk-modal-header text-center">
+            <div class="uk-modal-title g-font-size-20">同步到云.....</div>
+          </div>
+
+          <div class="uk-modal-body" uk-overflow-auto>
+
+            <div v-for="txt in deploytxts">{{txt}}</div>
+
+            <div class="w-100 text-center g-pos-abs g-bottom-0 g-left-0 g-z-index-9999" v-if="isdeploying">
+              <div class="lds-line">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+  </main>
+
+
+  <script>
+    const { dialog, shell } = require('electron').remote
+
+    window.nodeRequire = require;
+    delete window.require;
+    delete window.exports;
+    delete window.module;
+
+
+  </script>
+
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/jquery-migrate/jquery-migrate.min.js"></script>
+
+  <script src="../assets/vendor/popper.min.js"></script>
+  <script src="../assets/vendor/bootstrap/bootstrap.min.js"></script>
+
+  <script src="../assets/vendor/bootstrap/offcanvas.js"></script>
+
+
+  <script src="../assets/vendor/dzsparallaxer/dzsparallaxer.js"></script>
+  <script src="../assets/vendor/dzsparallaxer/dzsscroller/scroller.js"></script>
+  <script src="../assets/vendor/dzsparallaxer/advancedscroller/plugin.js"></script>
+  <script src="../assets/vendor/masonry/dist/masonry.pkgd.min.js"></script>
+  <script src="../assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="../assets/vendor/malihu-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+  <script src="../assets/vendor/slick-carousel/slick/slick.js"></script>
+  <script src="../assets/vendor/fancybox/jquery.fancybox.min.js"></script>
+
+  <script src="../assets/js/hs.core.js"></script>
+  <script src="../assets/js/components/hs.header.js"></script>
+  <script src="../assets/js/helpers/hs.hamburgers.js"></script>
+  <script src="../assets/js/components/hs.dropdown.js"></script>
+  <script src="../assets/js/components/hs.scrollbar.js"></script>
+  <script src="../assets/js/components/hs.popup.js"></script>
+  <script src="../assets/js/components/hs.carousel.js"></script>
+  <script src="../assets/js/components/hs.go-to.js"></script>
+  <script src="../assets/vendor/custombox/custombox.min.js"></script>
+  <script src="../assets/js/components/hs.modal-window.js"></script>
+
+
+  <script src="../vue.js"></script>
+  <script src="../assets/vendor/cubeportfolio-full/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
+  <script src="../assets/js/components/hs.cubeportfolio.js"></script>
+
+  <script src="../assets/jquery/jquery-ui.js"></script>
+
+  <script src="./js/listfunction.js"></script>
+  <script src="./js/uikit.js"></script>
+
+
+  <script>
+    $(document).on('click', 'a[href^="http"]', function (event) {
+      event.preventDefault();
+      shell.openExternal(this.href);
+    });
+
+
+
+
+
+    $(window).on('load', function () {
+      $.HSCore.components.HSHeader.init($('#js-header'));
+
+      $.HSCore.components.HSPopup.init('.js-fancybox', {
+        btnTpl: {
+          smallBtn: '<button data-fancybox-close class="btn g-pos-abs g-top-25 g-right-30 g-line-height-1 g-bg-transparent g-font-size-16 g-color-gray-light-v6 g-brd-none p-0" title=""><i class="fa fa-close"></i></button>'
+        }
+      });
+
+
+
+    });
+  </script>
+
+</body>
+
+</html>

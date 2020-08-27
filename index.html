@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+</head>
+
+<body>
+    <h1 onclick="abc()">Hello World!111</h1>
+    We are using node
+    <script>document.write(process.versions.node)</script>,
+    Chrome
+    <script>document.write(process.versions.chrome)</script>,
+    and Electron
+    <script>document.write(process.versions.electron)</script>.
+</body>
+<script>
+    function abc() {
+        const tencentcloud = require("tencentcloud-sdk-nodejs");
+
+
+        const ScfClient = tencentcloud.scf.v20180416.Client;
+        const models = tencentcloud.scf.v20180416.Models;
+
+        const Credential = tencentcloud.common.Credential;
+        const ClientProfile = tencentcloud.common.ClientProfile;
+        const HttpProfile = tencentcloud.common.HttpProfile;
+
+        let cred = new Credential("AKIDWxY0Msxl3ERZyDaNHyGC2f7Jv74no3wj", "yhutQjma9Vcdftr3EZp9QvSvKetKgxRg");
+        let httpProfile = new HttpProfile();
+        httpProfile.endpoint = "scf.tencentcloudapi.com";
+        let clientProfile = new ClientProfile();
+        clientProfile.httpProfile = httpProfile;
+        let client = new ScfClient(cred, "ap-guangzhou", clientProfile);
+
+        let req = new models.ListFunctionsRequest();
+
+        let params = '{}'
+        req.from_json_string(params);
+
+
+        client.ListFunctions(req, function (errMsg, response) {
+
+            if (errMsg) {
+                console.log(errMsg);
+                return;
+            }
+
+            console.log(response.to_json_string());
+        });
+
+        console.debug("aaa")
+    }
+</script>
+
+</html>

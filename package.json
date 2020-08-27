@@ -1,0 +1,22 @@
+{
+  "name": "scfgui",
+  "version": "0.0.1",
+  "description": "scf gui",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^7.3.2"
+  },
+  "dependencies": {
+    "cos-nodejs-sdk-v5": "^2.6.2",
+    "jsonfile": "^6.0.1",
+    "jsonify": "0.0.0",
+    "tencentcloud-sdk-nodejs": "^3.0.222",
+    "yaml": "^1.10.0"
+  }
+}

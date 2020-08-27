@@ -1,0 +1,187 @@
+[
+    {
+        "chk": true,
+        "name": "旅游",
+        "app": "lvyouweb",
+        "org": "lvyou",
+        "id": "AKIDBdzSpIvHmkcKV8w5azXCrXQi5IJDgSq4",
+        "key": "kwefY4T1QxfZrTJ0d8riQBl9RnKA7AYa",
+        "project": {
+            "codeUri": "/Users/zhangtao/Documents/xiaochengxu/旅游/lvyouserver/",
+            "runtime": "Php7",
+            "region": "ap-shanghai",
+            "exclude": [
+                "vendor/phpunit"
+            ],
+            "include": [],
+            "vpcConfig": {
+                "isvpc": "false",
+                "subnetId": "",
+                "vpcId": ""
+            },
+            "apigw": {
+                "isapi": "true",
+                "serviceName": "lvyou",
+                "serviceId": "service-c6wn3dwr"
+            }
+        },
+        "functions": [
+            {
+                "component": "scf",
+                "name": "lvgetuserinfo",
+                "stage": "prod",
+                "app": "lvyouweb",
+                "org": "lvyou",
+                "inputs": {
+                    "name": "lvgetuserinfo",
+                    "namespace": "default",
+                    "enableRoleAuth": true,
+                    "handler": "lvyouapi.lvgetuserinfo",
+                    "runtime": "Php7",
+                    "region": "ap-shanghai",
+                    "description": "",
+                    "memorySize": 64,
+                    "timeout": 30,
+                    "src": {
+                        "src": "/Users/zhangtao/Documents/xiaochengxu/旅游/lvyouserver/",
+                        "exclude": [
+                            "vendor/phpunit"
+                        ],
+                        "include": []
+                    },
+                    "tags": {},
+                    "environment": {},
+                    "events": [
+                        {
+                            "apigw": {
+                                "name": "lvyou",
+                                "parameters": {
+                                    "serviceId": "service-c6wn3dwr",
+                                    "protocols": [
+                                        "https"
+                                    ],
+                                    "description": "",
+                                    "environment": "release",
+                                    "endpoints": [
+                                        {
+                                            "path": "/default/lvyouapi/lvgetuserinfo",
+                                            "method": "POST",
+                                            "responseType": "JSON",
+                                            "serviceTimeout": 30,
+                                            "param": [],
+                                            "enableCORS": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "component": "scf",
+                "name": "lysharesign",
+                "stage": "prod",
+                "app": "lvyouweb",
+                "org": "lvyou",
+                "inputs": {
+                    "name": "lysharesign",
+                    "namespace": "default",
+                    "enableRoleAuth": true,
+                    "handler": "lvyouapi.lysharesign",
+                    "runtime": "Php7",
+                    "region": "ap-shanghai",
+                    "description": "",
+                    "memorySize": 64,
+                    "timeout": 30,
+                    "src": {
+                        "src": "/Users/zhangtao/Documents/xiaochengxu/旅游/lvyouserver/",
+                        "exclude": [
+                            "vendor/phpunit"
+                        ],
+                        "include": []
+                    },
+                    "tags": {},
+                    "environment": {},
+                    "events": [
+                        {
+                            "apigw": {
+                                "name": "lvyou",
+                                "parameters": {
+                                    "serviceId": "service-c6wn3dwr",
+                                    "protocols": [
+                                        "https"
+                                    ],
+                                    "description": "",
+                                    "environment": "release",
+                                    "endpoints": [
+                                        {
+                                            "path": "/default/lvyouapi/lysharesign",
+                                            "method": "POST",
+                                            "responseType": "JSON",
+                                            "serviceTimeout": 30,
+                                            "param": [],
+                                            "enableCORS": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "component": "scf",
+                "name": "lygifthistory",
+                "stage": "prod",
+                "app": "lvyouweb",
+                "org": "lvyou",
+                "inputs": {
+                    "name": "lygifthistory",
+                    "namespace": "default",
+                    "enableRoleAuth": true,
+                    "handler": "lvyouapi.lygifthistory",
+                    "runtime": "Php7",
+                    "region": "ap-shanghai",
+                    "description": "",
+                    "memorySize": 64,
+                    "timeout": 30,
+                    "src": {
+                        "src": "/Users/zhangtao/Documents/xiaochengxu/旅游/lvyouserver/",
+                        "exclude": [
+                            "vendor/phpunit"
+                        ],
+                        "include": []
+                    },
+                    "tags": {},
+                    "environment": {},
+                    "events": [
+                        {
+                            "apigw": {
+                                "name": "lvyou",
+                                "parameters": {
+                                    "serviceId": "service-c6wn3dwr",
+                                    "protocols": [
+                                        "https"
+                                    ],
+                                    "description": "",
+                                    "environment": "release",
+                                    "endpoints": [
+                                        {
+                                            "path": "/default/lvyouapi/lygifthistory",
+                                            "method": "POST",
+                                            "responseType": "JSON",
+                                            "serviceTimeout": 30,
+                                            "param": [],
+                                            "enableCORS": true
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+]
